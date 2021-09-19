@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import Header from '../../component/Header';
 import { getSignal } from '../../redux/actions/signalAction';
 import styles from './styles';
 import SignalItem from '../../component/SignalItem';
 import CreateSignal from '../../component/CreateSignal';
 
+
 const Signals = ({user, signals, getSignal}) => {
     const [showCreate, setShowCreate] = useState(false);
     const navigation = useNavigation();
+    const dispatch = useDispatch();
 
     useEffect(() => {
         const unsibscribe = navigation.addListener('focus', () => {

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "582843428862",
+    "project_id": "ukrtraders-390bc",
+    "storage_bucket": "ukrtraders-390bc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:582843428862:android:8c5e6811ba0834a5375aaf",
+        "android_client_info": {
+          "package_name": "com.ukrtraders"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "582843428862-aaje731t96i37lvslolj24p78kpmoqpi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAhJabO_bZdxZV322nhufFa8mbmuQx2vuM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "582843428862-aaje731t96i37lvslolj24p78kpmoqpi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

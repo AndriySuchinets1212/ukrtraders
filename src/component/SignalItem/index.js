@@ -28,15 +28,23 @@ const SignalItem = ({item}) => {
                             <Text style={styles.stopText}>{item.stopLoss}</Text>
                         </View>
                     </View>
-                    <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                    <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 13}}>
+                        <View style={{flexDirection: "row"}}>
+                            <Text style={styles.Text}>Entry price: </Text>
+                            <Text style={styles.entryPrice}>{item.entryPrice}</Text>
+                        </View>
+                        {user.role === 'admin' && 
+                            <TouchableOpacity style={styles.comentWrapper} onPress={() => setEditSignal(true)}>
+                                <Text style={styles.editText}>Змінити</Text>
+                                <Image source={require('../../assets/edit.png')} style={{width: 20, height: 20}}/>
+                            </TouchableOpacity>
+                        }
+                    </View>
+                    <View>
                         <View style={styles.takeWrapper}>
                             <Text style={styles.Text}>Take Profit 1: </Text>
                             <Text style={styles.takeText}>{item.takeProfit1}</Text>
                         </View>
-                        <TouchableOpacity style={styles.comentWrapper}>
-                            <Text style={styles.commentText}>Коментувати</Text>
-                            <Image source={require('../../assets/comment.png')} style={{width: 20, height: 20}}/>
-                        </TouchableOpacity>
                     </View>
                     <View style={{flexDirection: 'row', justifyContent: !!item.takeProfit2 ? 'space-between' : 'flex-end'}}>
                         {!!item.takeProfit2  &&
@@ -44,12 +52,6 @@ const SignalItem = ({item}) => {
                                 <Text style={styles.Text}>Take Profit 2: </Text>
                                 <Text style={styles.takeText}>{item.takeProfit2}</Text>
                             </View> 
-                        }
-                        {user.role === 'admin' && 
-                            <TouchableOpacity style={styles.comentWrapper} onPress={() => setEditSignal(true)}>
-                                <Text style={styles.editText}>Змінити</Text>
-                                <Image source={require('../../assets/edit.png')} style={{width: 20, height: 20}}/>
-                            </TouchableOpacity>
                         }
                         {editSignal && <EditSignal visible={editSignal} setVisible={() => setEditSignal(false)} item={item}/>}
                     </View>

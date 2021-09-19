@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { Image, View, Text } from 'react-native';
+import { Image, View, Text, Alert } from 'react-native';
 import { AsyncStorage } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -10,6 +10,9 @@ import Signals from '../screens/Signals';
 import Teaching from '../screens/Teaching';
 import Instruction from '../screens/Instruction';
 import Users from '../screens/Users';
+import News from '../screens/News';
+import InfoScreen from '../screens/InfoScreen';
+import Profile from '../screens/Profile';
 
 const Tab = createBottomTabNavigator();
 
@@ -28,6 +31,8 @@ const TabNavigation = ({user}) => {
             style: {backgroundColor: '#F17F3A', paddingTop: 15},
             labelStyle: {fontSize: 15, color: '#fff', fontWeight: '500'}
         }}>
+            {user.paid ?
+            <>
             <Tab.Screen name="Сигнали" component={Signals} options={{
                 tabBarIcon: () => (
                     <Image source={require('../assets/signalImage.png')} style={{width: 25, height: 25}}/>
@@ -39,18 +44,26 @@ const TabNavigation = ({user}) => {
                      <Image source={require('../assets/teaching.png')} style={{width: 25, height: 25, marginBottom: 10}}/>
                  )
             })}/>
-            {/* <Tab.Screen name="Профіль" options={{
+            <Tab.Screen name="Новини" component={News} options={{
                 tabBarIcon: () => (
-                    <Image source={require('../assets/signalImage.png')} style={{width: 25, height: 25}}/>
+                    <Image source={require('../assets/news.png')} style={{width: 25, height: 25, marginBottom: 10}}/>
                 )
-            }}/> */}
+            }}/>
+            <Tab.Screen name="Профіль" component={Profile} options={{
+                tabBarIcon: () => (
+                    <Image source={require('../assets/profile.png')} style={{width: 25, height: 25, marginBottom: 10}}/>
+                )
+            }}/>
             {user.role === 'admin' &&
                 <Tab.Screen name="Користувачі" component={Users} options={({route}) => ({
                     tabBarVisible: getTabBarVisible(route),
                      tabBarIcon: () => (
                          <Image source={require('../assets/users.png')} style={{width: 25, height: 25, marginBottom: 10}}/>
                      )
-                })}/>
+                })}/>}
+            </>
+            :
+            <Tab.Screen component={InfoScreen} name="InfoScreen"/>
             }
             
         </Tab.Navigator>

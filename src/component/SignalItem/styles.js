@@ -23,10 +23,10 @@ const styles = StyleSheet.create({
     },
     positionWrapper: {
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
     },
     Text: {
-        fontSize: 17,
+        fontSize: 18,
         color: 'grey'
     },
     takeWrapper: {
@@ -35,7 +35,6 @@ const styles = StyleSheet.create({
     },
     comentWrapper: {
         flexDirection: 'row',
-        marginTop: 10,
         alignItems: 'center',
         justifyContent: 'center'
     },
@@ -67,6 +66,10 @@ const styles = StyleSheet.create({
     },
     commentsText: {
         fontSize: 16
+    },
+    entryPrice: {
+        fontSize: 16,
+        color: '#000',
     }
 })
 

@@ -1,23 +1,40 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, Image, TouchableOpacity } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { connect } from 'react-redux';
+import messaging from '@react-native-firebase/messaging';
 import styles from './styles';
 import { setUserEmail, setTabNavigation } from '../../redux/actions/loginAction';
 import { loginUser } from '../../redux/actions/auth';
+
 
 const Login = ({setUserEmail, setTabNavigation, loginUser}) => {
     const [userLogin, setUserLogin] = useState('AndriyDev');
     const [userPassword, setUserPassword] = useState('admin123');
 
-    const loginHandler = () => {
-        setUserEmail(userLogin);
-        loginUser({
-            login: userLogin,
-            password: userPassword
-        })
+    const getToken = async() => {
+        return await messaging().getToken()
     }
 
+    useEffect(() => {
+        getToken().then(res => {
+            AsyncStorage.setItem('pushNotificationToken', res);
+        });
+    }, []);
+    const loginHandler = async() => {
+
+        setUserEmail(userLogin);
+        AsyncStorage.getItem('pushNotificationToken').then(res => {
+            loginUser({
+                login: userLogin,
+                password: userPassword,
+                pushNotificationsToken: res
+            })
+        })
+    }  
+
+    
     return (
         <LinearGradient style={styles.container} colors={['#F17F3A', '#ED3D33', '#ED3D33']}>
             <View style={styles.logoWrapper}>

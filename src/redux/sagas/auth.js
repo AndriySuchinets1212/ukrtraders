@@ -1,4 +1,5 @@
-import { Alert, AsyncStorage } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Alert } from 'react-native';
 import { call, put, takeEvery } from 'redux-saga/effects';
 import { LOCAL_URL } from '../../api';
 import { setAllUsers, setRegisterMessage, setUser } from '../actions/auth';
@@ -41,6 +42,7 @@ function loginUser (data) {
 function* loginUserSaga (action) {
     try {
         const response = yield call(loginUser, action.payload);
+        console.log(response, 'response');
         if(response.message){
            Alert.alert(
                 response.message
@@ -56,7 +58,7 @@ function* loginUserSaga (action) {
 
 
 function getAllUsers(token) {
-    return fetch(`${LOCAL_URL}api/auth/get-all-users`, {
+    return fetch(`${LOCAL_URL}api/users/get-all-users`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -78,7 +80,7 @@ function* getAllUsersSaga (action) {
 }
 
 function editUser(data, token) {
-    return fetch(`${LOCAL_URL}api/auth/edit-user`, {
+    return fetch(`${LOCAL_URL}api/users/edit-user`, {
         method: 'PUT',
         body: JSON.stringify(data),
         headers: {
@@ -110,6 +112,4 @@ function* editUserSaga(action) {
 export default function* watchAuthSaga() {
     yield takeEvery(types.REGISTER_USER, registerUserSaga);
     yield takeEvery(types.LOGIN_USER, loginUserSaga);
-    yield takeEvery(types.GET_ALL_USERS, getAllUsersSaga);
-    yield takeEvery(types.EDIT_USER, editUserSaga);
 }

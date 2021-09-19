@@ -1,10 +1,10 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { View, Text, Modal, TouchableOpacity, TextInput } from 'react-native';
-import { connect } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import styles from './styles';
 import { createNewSignal } from '../../redux/actions/signalAction';
 
-const CreateSignal = ({visible, setVisible, createNewSignal, user}) => {
+const CreateSignal = ({visible, setVisible}) => {
     const [couplesName, setCouplesName] = useState('');
     const [position, setPosition] = useState('BUY');
     const [entryPrice, setEntryPrice] = useState('');
@@ -13,6 +13,8 @@ const CreateSignal = ({visible, setVisible, createNewSignal, user}) => {
     const [stopLoss, setStopLoss] = useState('');
     const [comment, setComment] = useState('');
     const [error, setError] = useState(false);
+    const user = useSelector(state => state.auth.user);
+    const dispatch = useDispatch();
 
     const clearState = () => {
         setCouplesName('');
@@ -25,18 +27,18 @@ const CreateSignal = ({visible, setVisible, createNewSignal, user}) => {
     }
     
     const createButtonHandler = () => {
-            createNewSignal({
-                couplesName: couplesName,
-                position: position,
-                entryPrice: entryPrice,
-                stopLoss: stopLoss,
-                takeProfit1: takeProfit1,
-                takeProfit2: takeProfit2,
-                comments: comment,
-                createdAt: new Date()
-            }, user.token)
-            clearState();
-            setVisible();
+        dispatch(createNewSignal({
+            couplesName: couplesName,
+            position: position,
+            entryPrice: entryPrice,
+            stopLoss: stopLoss,
+            takeProfit1: takeProfit1,
+            takeProfit2: takeProfit2,
+            comments: comment,
+            createdAt: new Date()
+        }, user.token))
+        clearState();
+        setVisible();
     }
     return (
         <Modal 
@@ -153,11 +155,4 @@ const CreateSignal = ({visible, setVisible, createNewSignal, user}) => {
     )
 }
 
-const mapDispatchToProps = {
-    createNewSignal
-}
-
-const mapStateToProps = (state) => ({
-    user: state.auth.user
-})
-export default connect(mapStateToProps, mapDispatchToProps)(CreateSignal);
+export default CreateSignal;

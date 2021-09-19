@@ -1,5 +1,5 @@
 import { signals } from "../../defaultData/signals";
-import { CREATE_NEW_SIGNAL, EDIT_SIGNAL, GET_SIGNALS, SET_SIGNALS } from "../types";
+import { ADD_SIGNALS, GET_SIGNALS, SET_SIGNALS, EDIT_SIGNAL_USERS } from "../types";
 
 const initialState = {
     signals: []
@@ -9,13 +9,19 @@ export const signalReducer = (state = initialState, action) => {
     switch (action.type) {
         case SET_SIGNALS:
             return {...state, signals: action.payload}
-        case CREATE_NEW_SIGNAL: 
-            let newSignal = state.signals;
-            newSignal.push(action.payload)
-            return {...state, signals: newSignal}
-        case EDIT_SIGNAL:
+        case ADD_SIGNALS: 
+            const map = new Map();
+            const newSignal = state.signals;
+            newSignal.push(action.payload);
+            for(let value of newSignal) {
+                map.set(value._id, value)
+            }
+            const final = []
+            map.forEach(item => final.push(item))
+            return {...state, signals: final}
+        case EDIT_SIGNAL_USERS:
             const newSignals = state.signals.map(signal => {
-                if(signal._id == action.payload.id){
+                if(signal._id == action.payload._id){
                     signal.couplesName = action.payload.couplesName;
                     signal.entryPrice = action.payload.entryPrice;
                     signal.position = action.payload.position;
