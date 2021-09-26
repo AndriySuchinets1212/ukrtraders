@@ -7,6 +7,7 @@ import { getSignal } from '../../redux/actions/signalAction';
 import styles from './styles';
 import SignalItem from '../../component/SignalItem';
 import CreateSignal from '../../component/CreateSignal';
+import LinearGradient from 'react-native-linear-gradient';
 
 
 const Signals = ({user, signals, getSignal}) => {
@@ -24,7 +25,7 @@ const Signals = ({user, signals, getSignal}) => {
     return (
         <>
             <Header title="Сигнали"/>
-            <View style={styles.signalWrapper}>
+            <LinearGradient style={styles.signalWrapper} colors={['#000', '#F17F3A', '#B82925']} start={{x: 0, y: 0}} end={{x: 1, y: 1}}>
                 <FlatList 
                     data={signals}
                     renderItem={({item, index}) => {
@@ -39,7 +40,7 @@ const Signals = ({user, signals, getSignal}) => {
                 {showCreate && 
                     <CreateSignal visible={showCreate} setVisible={() => setShowCreate(false)}/>
                 }
-            </View>
+            </LinearGradient>
        </>
     )
 }

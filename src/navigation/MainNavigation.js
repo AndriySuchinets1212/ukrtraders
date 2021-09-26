@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { Image, View, Text, Alert } from 'react-native';
-import { AsyncStorage } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { connect } from 'react-redux';
@@ -12,7 +12,6 @@ import Instruction from '../screens/Instruction';
 import Users from '../screens/Users';
 import News from '../screens/News';
 import InfoScreen from '../screens/InfoScreen';
-import Profile from '../screens/Profile';
 
 const Tab = createBottomTabNavigator();
 
@@ -33,37 +32,32 @@ const TabNavigation = ({user}) => {
         }}>
             {user.paid ?
             <>
-            <Tab.Screen name="Сигнали" component={Signals} options={{
-                tabBarIcon: () => (
-                    <Image source={require('../assets/signalImage.png')} style={{width: 25, height: 25}}/>
-                )
-            }}/>
-            <Tab.Screen name="Навчання" component={TeachingNAvigation} options={({route}) => ({
-                tabBarVisible: getTabBarVisible(route),
-                 tabBarIcon: () => (
-                     <Image source={require('../assets/teaching.png')} style={{width: 25, height: 25, marginBottom: 10}}/>
-                 )
-            })}/>
-            <Tab.Screen name="Новини" component={News} options={{
-                tabBarIcon: () => (
-                    <Image source={require('../assets/news.png')} style={{width: 25, height: 25, marginBottom: 10}}/>
-                )
-            }}/>
-            <Tab.Screen name="Профіль" component={Profile} options={{
-                tabBarIcon: () => (
-                    <Image source={require('../assets/profile.png')} style={{width: 25, height: 25, marginBottom: 10}}/>
-                )
-            }}/>
-            {user.role === 'admin' &&
-                <Tab.Screen name="Користувачі" component={Users} options={({route}) => ({
+                <Tab.Screen name="Сигнали" component={Signals} options={{
+                    tabBarIcon: () => (
+                        <Image source={require('../assets/signalImage.png')} style={{width: 25, height: 25}}/>
+                    )
+                }}/>
+                <Tab.Screen name="Навчання" component={TeachingNAvigation} options={({route}) => ({
                     tabBarVisible: getTabBarVisible(route),
-                     tabBarIcon: () => (
-                         <Image source={require('../assets/users.png')} style={{width: 25, height: 25, marginBottom: 10}}/>
-                     )
-                })}/>}
-            </>
+                    tabBarIcon: () => (
+                        <Image source={require('../assets/teaching.png')} style={{width: 25, height: 25, marginBottom: 10}}/>
+                    )
+                })}/>
+                <Tab.Screen name="Новини" component={News} options={{
+                    tabBarIcon: () => (
+                        <Image source={require('../assets/news.png')} style={{width: 25, height: 25, marginBottom: 10}}/>
+                    )
+                }}/>
+                {user.role === 'admin' &&
+                    <Tab.Screen name="Користувачі" component={Users} options={({route}) => ({
+                        tabBarVisible: getTabBarVisible(route),
+                        tabBarIcon: () => (
+                            <Image source={require('../assets/users.png')} style={{width: 25, height: 25, marginBottom: 10}}/>
+                        )
+                    })}/>}
+                </>
             :
-            <Tab.Screen component={InfoScreen} name="InfoScreen"/>
+                <Tab.Screen component={InfoScreen} name="InfoScreen"/>
             }
             
         </Tab.Navigator>
@@ -89,12 +83,10 @@ const TeachingNAvigation = () => {
     )
 }
 const MainNavigation = ({user}) => {
-    const [token, setToken] = useState(null);
-    AsyncStorage.getItem('token').then(res => setToken(res));
     return (
         <NavigationContainer>
             {user.token ?
-                <TabNavigation user={user}/>
+                <TabNavigation user={user} />
             :
                 <StackNavigation />
             }

@@ -1,6 +1,6 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Alert } from 'react-native';
 import { call, put, takeEvery } from 'redux-saga/effects';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { LOCAL_URL } from '../../api';
 import { setAllUsers, setRegisterMessage, setUser } from '../actions/auth';
 import * as types from '../types';

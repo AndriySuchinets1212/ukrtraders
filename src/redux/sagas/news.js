@@ -1,3 +1,4 @@
+import { Alert } from 'react-native';
 import { call, put, takeEvery } from 'redux-saga/effects';
 import { LOCAL_URL } from '../../api';
 import { setNews } from '../actions/newsAction';
@@ -21,6 +22,7 @@ function* createNewsSaga(action) {
     try {
         const response = yield call(createNews, action.payload, action.token);
         console.log(response, 'responseNews')
+        Alert.alert(response.message);
     }catch (e) {
         console.log(e, 'error');
     }
